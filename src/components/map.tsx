@@ -2,33 +2,31 @@
 
 import { useEffect } from "react";
 import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import SearchBar from "@/components/SearchBar"; // Adjust import based on file location
 
 export default function Map() {
     useEffect(() => {
-        // Create the map after the component mounts
         const map = L.map("map").setView([51.505, -0.09], 13);
 
-        // Add OpenStreetMap tiles
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(map);
 
-        // Add a marker
-        L.marker([51.505, -0.09]).addTo(map).bindPopup("A pretty popup!").openPopup();
-
         return () => {
-            // Clean up the map on component unmount
             map.remove();
         };
     }, []);
 
+    const handleSearch = (query: string) => {
+        console.log("Searching for:", query);
+        // Implement database query or API call to fetch country coordinates
+    };
+
     return (
-        <div
-            id="map"
-            style={{
-                height: "100vh", // Set height for the map container
-                width: "100%",  // Full width
-            }}
-        ></div>
+        <div style={{ position: "relative" }}>
+            <div id="map" style={{ height: "100vh", width: "100%" }}></div>
+            <SearchBar onSearch={handleSearch} />
+        </div>
     );
 }
