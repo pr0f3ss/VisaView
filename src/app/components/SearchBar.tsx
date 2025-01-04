@@ -19,6 +19,7 @@ export default function SearchBar({ onSearch }: { onSearch: (query: string) => v
                 left: "10px",
                 zIndex: 4000,
                 background: "white",
+                color: "black",
                 padding: "10px",
                 borderRadius: "4px",
                 boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
