@@ -1,14 +1,26 @@
 import { useState } from "react";
 
-export default function SearchBar({ onSearch }: { onSearch: (query: string) => void }) {
+interface SearchBarProps {
+    onSearch: (query: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     const [query, setQuery] = useState("");
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value);
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            handleSearch();
+        }
+    };
+
     const handleSearch = () => {
-        onSearch(query);
+        if (query.trim()) {
+            onSearch(query.trim());
+        }
     };
 
     return (
@@ -29,6 +41,7 @@ export default function SearchBar({ onSearch }: { onSearch: (query: string) => v
                 type="text"
                 value={query}
                 onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
                 placeholder="Search country..."
                 style={{
                     padding: "8px",
@@ -55,3 +68,5 @@ export default function SearchBar({ onSearch }: { onSearch: (query: string) => v
         </div>
     );
 }
+
+export default SearchBar;
